@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using NBitcoin;
 using NBitcoin.BouncyCastle.Math;
@@ -172,6 +173,8 @@ namespace Stratis.Bitcoin.Networks
 
             this.SeedNodes = new List<NetworkAddress>
             {
+                new NetworkAddress(IPAddress.Parse("127.0.0.1"), 19555), // node-2
+                new NetworkAddress(IPAddress.Parse("127.0.0.1"), 20555), // node-3
             };
             
             this.StandardScriptsRegistry = new StraxStandardScriptsRegistry();
