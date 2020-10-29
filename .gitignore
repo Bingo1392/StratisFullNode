@@ -259,6 +259,7 @@ ModelManifest.xml
 /src/Stratis.FederatedSidechains.AdminDashboard/wwwroot/lib
 
 src/.idea/.idea.Stratis.Bitcoin.FullNode/.idea/
+.idea
 
 .DS_Store
 
