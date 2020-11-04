@@ -20,7 +20,7 @@ namespace Stratis.Bitcoin.Networks
         public const int StratisDefaultMaxTipAgeInSeconds = 2 * 60 * 60;
 
         /// <summary> The name of the root folder containing the different Stratis blockchains (StratisMain, StratisTest, StratisRegTest). </summary>
-        public const string SmallRootFolderName = "small";
+        public const string SmallRootFolderName = "small3";
 
         /// <summary> The default name used for the Stratis configuration file. </summary>
         public const string SmallDefaultConfigFilename = "small.conf";
@@ -30,12 +30,12 @@ namespace Stratis.Bitcoin.Networks
             this.Name = "SmallMain";
             this.NetworkType = NetworkType.Mainnet;
             this.Magic = BitConverter.ToUInt32(Encoding.ASCII.GetBytes("Small"));
-            this.DefaultPort = 18555;
+            this.DefaultPort = 20555;
             this.DefaultMaxOutboundConnections = 16;
             this.DefaultMaxInboundConnections = 100;
-            this.DefaultRPCPort = 18554;
-            this.DefaultAPIPort = 18553;
-            this.DefaultSignalRPort = 18552;
+            this.DefaultRPCPort = 20554;
+            this.DefaultAPIPort = 20553;
+            this.DefaultSignalRPort = 20552;
             this.MaxTipAge = 2 * 60 * 60;
             this.MinTxFee = 10000;
             this.FallbackFee = 10000;
