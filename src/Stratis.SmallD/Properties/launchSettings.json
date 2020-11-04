@@ -1,4 +1,4 @@
-﻿{
+{
   "profiles": {
     "Stratis.SmallD": {
       "commandName": "Project",
@@ -6,7 +6,7 @@
     },
     "Stratis.SmallD Mine with Default wallet": {
       "commandName": "Project",
-      "commandLineArgs": "-mine -whitebind=127.0.0.1 -defaultwalletname=default -defaultwalletpassword=default"
+      "commandLineArgs": "-mine=1 -whitebind=127.0.0.1 -defaultwalletname=default -defaultwalletpassword=default"
     },
     "Stratis.SmallD Test": {
       "commandName": "Project",
