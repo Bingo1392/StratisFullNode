@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using NBitcoin;
 using NBitcoin.BouncyCastle.Math;
@@ -14,9 +15,9 @@ namespace Stratis.Bitcoin.Networks
     {
         public StraxMain()
         {
-            this.Name = "StraxMain";
+            this.Name = "PrivateMain";
             this.NetworkType = NetworkType.Mainnet;
-            this.Magic = BitConverter.ToUInt32(Encoding.ASCII.GetBytes("StrX"));
+            this.Magic = BitConverter.ToUInt32(Encoding.ASCII.GetBytes("Private"));
             this.DefaultPort = 17105;
             this.DefaultMaxOutboundConnections = 16;
             this.DefaultMaxInboundConnections = 100;
@@ -30,7 +31,7 @@ namespace Stratis.Bitcoin.Networks
             this.RootFolderName = StraxNetwork.StraxRootFolderName;
             this.DefaultConfigFilename = StraxNetwork.StraxDefaultConfigFilename;
             this.MaxTimeOffsetSeconds = 25 * 60;
-            this.CoinTicker = "STRAX";
+            this.CoinTicker = "PRIVATE";
             this.DefaultBanTimeSeconds = 11250; // 500 (MaxReorg) * 45 (TargetSpacing) / 2 = 3 hours, 7 minutes and 30 seconds
 
             this.CirrusRewardDummyAddress = "CPqxvnzfXngDi75xBJKqi4e6YrFsinrJka"; // Cirrus main address
@@ -58,8 +59,8 @@ namespace Stratis.Bitcoin.Networks
             var consensusFactory = new PosConsensusFactory();
 
             // Create the genesis block.
-            this.GenesisTime = 1598918400; // 1 September 2020
-            this.GenesisNonce = 1236386;
+            this.GenesisTime = 1603128356; // 1 September 2020
+            this.GenesisNonce = 1831492;
             this.GenesisBits = 0x1e0fffff; // The difficulty target
             this.GenesisVersion = 1;
             this.GenesisReward = Money.Zero;
@@ -97,7 +98,7 @@ namespace Stratis.Bitcoin.Networks
             this.Consensus = new NBitcoin.Consensus(
                 consensusFactory: consensusFactory,
                 consensusOptions: consensusOptions,
-                coinType: 105105, // https://github.com/satoshilabs/slips/blob/master/slip-0044.md
+                coinType: 1, // https://github.com/satoshilabs/slips/blob/master/slip-0044.md
                 hashGenesisBlock: genesisBlock.GetHash(),
                 subsidyHalvingInterval: 210000,
                 majorityEnforceBlockUpgrade: 750,
@@ -110,7 +111,7 @@ namespace Stratis.Bitcoin.Networks
                 maxReorgLength: 500,
                 defaultAssumeValid: null, // TODO: Set this once some checkpoint candidates have elapsed
                 maxMoney: long.MaxValue,
-                coinbaseMaturity: 50,
+                coinbaseMaturity: 5,
                 premineHeight: 2,
                 premineReward: Money.Coins(125000000),
                 proofOfWorkReward: Money.Coins(18),
@@ -122,7 +123,7 @@ namespace Stratis.Bitcoin.Networks
                 powLimit: new Target(new uint256("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")),
                 minimumChainWork: null,
                 isProofOfStake: true,
-                lastPowBlock: 12500,
+                lastPowBlock: 1000,
                 proofOfStakeLimit: new BigInteger(uint256.Parse("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").ToBytes(false)),
                 proofOfStakeLimitV2: new BigInteger(uint256.Parse("000000000000ffffffffffffffffffffffffffffffffffffffffffffffffffff").ToBytes(false)),
                 proofOfStakeReward: Money.Coins(18)
@@ -149,17 +150,25 @@ namespace Stratis.Bitcoin.Networks
             };
 
             this.Bech32Encoders = new Bech32Encoder[2];
-            var encoder = new Bech32Encoder("strax");
+            var encoder = new Bech32Encoder("private");
             this.Bech32Encoders[(int)Bech32Type.WITNESS_PUBKEY_ADDRESS] = encoder;
             this.Bech32Encoders[(int)Bech32Type.WITNESS_SCRIPT_ADDRESS] = encoder;
 
             this.DNSSeeds = new List<DNSSeedData>
             {
-                new DNSSeedData("mainnet1.stratisnetwork.com", "mainnet1.stratisnetwork.com")
+                // new DNSSeedData("mainnet1.stratisnetwork.com", "mainnet1.stratisnetwork.com")
             };
 
+            // You can also setup nodes via config file. Just add an IP address and a port like this: addnode=127.0.0.1:17105
+            // or you can do the same thing with starting parameter -addnode=127.0.0.1:17105
+            // Don't forget to whitelisted your connection. You can do it via config file (add whitebind=127.0.0.1 into
+            // your config file) or you can just start the server with parameter -whitebind=127.0.0.1. You can find
+            // an example in launchSettings.json file.
             this.SeedNodes = new List<NetworkAddress>
             {
+                // new NetworkAddress(IPAddress.Parse("127.0.0.1"), 17105), // node-1
+                // new NetworkAddress(IPAddress.Parse("127.0.0.1"), 18105), // node-2
+                // new NetworkAddress(IPAddress.Parse("127.0.0.1"), 19105), // node-3
             };
 
             this.StandardScriptsRegistry = new StraxStandardScriptsRegistry();
@@ -167,8 +176,8 @@ namespace Stratis.Bitcoin.Networks
             Assert(this.DefaultBanTimeSeconds <= this.Consensus.MaxReorgLength * this.Consensus.TargetSpacing.TotalSeconds / 2);
 
             // TODO: Update these when the final block is mined
-            Assert(this.Consensus.HashGenesisBlock == uint256.Parse("0x00000921702bd55eb8c4318a8dbcfca29b9d340b1856c6af0b8962a3a0e12fff"));
-            Assert(this.Genesis.Header.HashMerkleRoot == uint256.Parse("0xb21368a732cb9ae9b34a45eea13ce1b7cdb3c4b02991d3f715022d67d2b51c8d"));
+            // Assert(this.Consensus.HashGenesisBlock == uint256.Parse("0x00000921702bd55eb8c4318a8dbcfca29b9d340b1856c6af0b8962a3a0e12fff"));
+            // Assert(this.Genesis.Header.HashMerkleRoot == uint256.Parse("0xb21368a732cb9ae9b34a45eea13ce1b7cdb3c4b02991d3f715022d67d2b51c8d"));
 
             StraxNetwork.RegisterRules(this.Consensus);
             StraxNetwork.RegisterMempoolRules(this.Consensus);

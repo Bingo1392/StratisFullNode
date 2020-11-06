@@ -22,6 +22,18 @@
     "Stratis.StraxD Test No assumevalid": {
       "commandName": "Project",
       "commandLineArgs": "-testnet -assumevalid=0 -checkpoints=false"
+    },
+    "Stratis.StraxD Private": {
+      "commandName": "Project",
+      "commandLineArgs": "-whitebind=127.0.0.1 -addnode=127.0.0.1:17105 -addnode=127.0.0.1:18105 -addnode=127.0.0.1:19105"
+    },
+    "Stratis.StraxD Private staking": {
+      "commandName": "Project",
+      "commandLineArgs": "-stake=1 -walletname=default -walletpassword=default -whitebind=127.0.0.1 -addnode=127.0.0.1:17105 -addnode=127.0.0.1:18105 -addnode=127.0.0.1:19105"
+    },
+    "Stratis.StraxD Private with Default wallet": {
+      "commandName": "Project",
+      "commandLineArgs": "-defaultwalletname=default -defaultwalletpassword=default -unlockdefaultwallet -whitebind=127.0.0.1 -addnode=127.0.0.1:17105 -addnode=127.0.0.1:18105 -addnode=127.0.0.1:19105"
     }
   }
 }

@@ -1,0 +1,77 @@
+version: "3.7"
+
+services: 
+  node_1: 
+    command: 
+      - dotnet
+      - run
+      - "-apiuri=http://0.0.0.0"
+      - "-whitebind=127.0.0.1"
+      - "-whitebind=0.0.0.0"
+      - "-addnode=127.0.0.1:18105"
+      - "-addnode=127.0.0.1:19105"
+      - "-addnode=0.0.0.0:18105"
+      - "-addnode=0.0.0.0:19105"
+      - "-stake=1"
+      - "-walletname=default"
+      - "-walletpassword=default"
+    container_name: node_1
+    environment: 
+      Instance: 1
+    hostname: node_1
+    image: "stratisfullnode/private:latest"
+    ports: 
+      - "127.0.0.1:17105:17105"
+      - "127.0.0.1:17104:17104"
+      - "127.0.0.1:17103:17103"
+      - "127.0.0.1:17102:17102"
+    volumes:
+      - /root/.stratisfullnode
+      - /root/.stratisnode
+  node_2: 
+    command: 
+      - dotnet
+      - run
+      - "-apiuri=http://0.0.0.0"
+      - "-whitebind=127.0.0.1"
+      - "-whitebind=0.0.0.0"
+      - "-addnode=127.0.0.1:17105"
+      - "-addnode=127.0.0.1:19105"
+      - "-addnode=0.0.0.0:18105"
+      - "-addnode=0.0.0.0:19105"
+    container_name: node_2
+    depends_on: 
+      - node_1
+    environment: 
+      Instance: 2
+    hostname: node_2
+    image: "stratisfullnode/private:latest"
+    ports: 
+      - "127.0.0.1:18105:17105"
+      - "127.0.0.1:18104:17104"
+      - "127.0.0.1:18103:17103"
+      - "127.0.0.1:18102:17102"
+  node_3: 
+    command: 
+      - dotnet
+      - run
+      - "-apiuri=http://0.0.0.0"
+      - "-whitebind=127.0.0.1"
+      - "-whitebind=0.0.0.0"
+      - "-addnode=127.0.0.1:17105"
+      - "-addnode=127.0.0.1:19105"
+      - "-addnode=0.0.0.0:18105"
+      - "-addnode=0.0.0.0:19105"
+    container_name: node_3
+    depends_on: 
+      - node_1
+      - node_2
+    environment: 
+      Instance: 3
+    hostname: node_3
+    image: "stratisfullnode/private:latest"
+    ports: 
+      - "127.0.0.1:19105:17105"
+      - "127.0.0.1:19104:17104"
+      - "127.0.0.1:19103:17103"
+      - "127.0.0.1:19102:17102"
